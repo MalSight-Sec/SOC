@@ -1,4 +1,10 @@
-# -----Tools and Commands-------- 
+# Description:
+These tools and command-line utilities are used in my daily work to quickly analyze suspicious files such as emails, documents, and PDFs. They help with extracting attachments, checking for malicious macros, and identifying indicators like embedded shellcode or scripts. I use them for fast triage during investigations, and refer back to these commands whenever there’s a doubt or a need to verify something manually. This collection serves as a handy reference for practical analysis and troubleshooting.
+
+
+
+
+## -----Tools and Commands-------- 
 
 ## Phishing Analysis Tools:
 
