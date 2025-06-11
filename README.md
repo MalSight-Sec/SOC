@@ -1,6 +1,6 @@
 # -----Tools and Commands-------- 
 
-## Files Analysis Tools:
+## Phishing Analysis Tools:
 
 ### 1.)EIOC
 
