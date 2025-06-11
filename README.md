@@ -49,15 +49,15 @@ $ python3  oledump.py  sample.docm -s A3 -v
 
 ### 6.)PDFID
 
-#### ✅ **Main Indicators of Malicious Activity in the PDF ###
+✅ **Main Indicators of Malicious Activity in the PDF**
 
-| Keyword                 | Count                        | Meaning |
-| ---                     | ---|                          | --- |
-| `/OpenAction`           | 1  |                          | 🚨 Automatically executes an action when the PDF is opened. Suspicious. |
-| `/Launch`               | 1  |                          | 🚨 Can be used to execute external files or commands. Very dangerous. |
-| `/EmbeddedFile`         | 1  |                          | ⚠️  Indicates a file is embedded (e.g., EXE, script). Possible dropper. |
-| `/JS`, `/JavaScript`    | 0  |                         | ✅ No JavaScript — that's good, but not enough to rule out malware. |
-
+| Keyword        | Count | Meaning                                                                 |
+|----------------|-------|------------------------------------------------------------------------ |
+| /OpenAction    | 1     | 🚨 Automatically executes an action when the PDF is opened. Suspicious. |
+| /Launch        | 1     | 🚨 Can be used to execute external files or commands. Very dangerous.  |
+| /EmbeddedFile  | 1     | ⚠️ Indicates a file is embedded (e.g., EXE, script). Possible dropper. |
+| /JS, /JavaScript | 0   | ✅ No JavaScript — that's good, but not enough to rule out malware.    |
+ 
 $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf 
 
 
