@@ -30,7 +30,7 @@ $source myenv/bin/activate
 
 #### Then try the below command:
 
-$ python3 oleid.py AR_Wedding_RSVP.docm   
+$ python3 oleid.py sample.docm   
 
 
 
