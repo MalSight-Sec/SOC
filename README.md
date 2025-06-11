@@ -69,4 +69,4 @@ $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf
 
 #### Dump and extract embedded files from a PDF file ###
 
- python3  pdf-parser.py  pdf-doc-vba-eicar-dropper.pdf  --object 8 --filter --raw  --dump  test.doc 
+ python3  pdf-parser.py  sample-vba-eicar-dropper.pdf  --object 8 --filter --raw  --dump  test.doc 
