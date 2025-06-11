@@ -36,7 +36,7 @@ $ python3 oleid.py AR_Wedding_RSVP.docm
 
 ### 5.)OLEDUMP
 
-#### oledump.py is used to analyze OLE Compound Files, also known as Structured Storage files. These include older Microsoft Office formats such as .doc (Word), .xls (Excel), and .ppt (PowerPoint), as well as macro-enabled files like .docm and .xlsm. It can also analyze .msg files used by Microsoft Outlook. These file types often contain embedded objects or VBA macros, which are commonly used in malware and phishing attacks. oledump.py helps extract and inspect these components for further investigation.
+#### oledump.py is a tool used to analyze OLE files, which are mostly older Microsoft Office documents. It works with file types like .doc, .xls, .ppt, .docm, .xlsm, and .msg. These files often contain embedded macros or objects, which can be used in phishing or malware attacks. oledump.py helps extract and view these hidden or suspicious components for further analysis.
 
 $python3  oledump.py  sample.docm 
 
