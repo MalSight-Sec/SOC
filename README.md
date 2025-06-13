@@ -98,9 +98,9 @@ $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf
 
 $ tcpdump -r 2024-04-18.pcap -tt port 80 --count
 
-##### → Extract HTTP GET/POST traffic to/from host 10.0.0.168:
+##### → Extract HTTP GET/POST traffic to/from host 10.xx.xx.xx:
 
-$ tcpdump -r 2021-09-14.pcap -tt port http and host 10.0.0.168 | grep -E "GET|POST"
+$ tcpdump -r 2021-09-14.pcap -tt port http and host 10.xx.xx.xx | grep -E "GET|POST"
 
 ##### → Search for specific file names in raw payloads:
 
@@ -139,20 +139,20 @@ $tcpdump -tt -r file.pcap -n tcp | cut -d " " -f 5 | cut -d "." -f 1-4 | sort | 
 ## 🔁 Analyze Communication Between Two IPs
 -----------------------------------------
 
-➤ Count packets between suspected source and destination:
+➤ Count packets between the suspected source and destination:
 
-$ tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 --count
+$ tcpdump -r file.pcap src host 10.xx.xx.xx and dst host 85.xx.xx.xx --count
 
 
 ## 🔎 Identify Common Ports Used
 ------------------------------
-➤ From 10.4.18.169 to 85.239.53.219:
+➤ From 10.xx.xx.xx to 85.xx.xx.xx:
 
-$ tcpdump -r file.pcap -n tcp and src host 10.4.18.169 and dst host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+$ tcpdump -r file.pcap -n tcp and src host 10.xx.xx.xx and dst host 85.xx.xx.xx | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
 
-➤ Reverse (from 85.239.53.219 to 10.4.18.169):
+➤ Reverse (from 85.xx.xx.xx to 10.xx.xx.xx):
 
-$tcpdump -r file.pcap -n tcp and dst host 10.4.18.169 and src host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+$tcpdump -r file.pcap -n tcp and dst host 10.xx.xx.xx and src host 85.xx.xx.xx | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
 
 
 ## 🌐 Detect HTTP Requests (if unencrypted)
@@ -160,13 +160,13 @@ $tcpdump -r file.pcap -n tcp and dst host 10.4.18.169 and src host 85.239.53.219
 
 ➤ Look for GET or POST requests:
 
-$ tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 -A | grep -E "GET|POST"
+$ tcpdump -r file.pcap src host 10.xx.xx.xx and dst host 85.xx.xx.xx -A | grep -E "GET|POST"
 
 
 ## 🔤 Read Payloads in ASCII
 --------------------------
 
-$ tcpdump -r file.pcap host 10.4.18.169 and host 85.239.53.219 -A
+$ tcpdump -r file.pcap host 10.xx.xx.xx and host 85.xx.xx.xx -A
 
 
 ## 🔐 Search for Sensitive Data (e.g., credentials)
@@ -174,18 +174,18 @@ $ tcpdump -r file.pcap host 10.4.18.169 and host 85.239.53.219 -A
 
 ➤ Basic credential search:
 
-$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login"
+$ tcpdump -r file.pcap host 85.xx.xx.xx -A | grep -i "pass\|user\|login"
 
 ➤ Exclude common headers (like User-Agent):
 
-$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login" | grep -v "User-Agent"
+$ tcpdump -r file.pcap host 85.xx.xx.xx -A | grep -i "pass\|user\|login" | grep -v "User-Agent"
 
 
 ## 📁 Search for File Transfers or Names
 
 --------------------------------------
 
-$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "filename"
+$ tcpdump -r file.pcap host 85.xx.xx.xx -A | grep -i "filename"
 
 
 ## 🌍 Find Domains (via DNS Queries)
