@@ -1,5 +1,6 @@
 # Description:
-These tools and command-line utilities are used in my daily work to quickly analyze suspicious files such as emails, documents, and PDFs. They help with extracting attachments, checking for malicious macros, and identifying indicators like embedded shellcode or scripts. I use them for fast triage during investigations, and refer back to these commands whenever there’s a doubt or a need to verify something manually. This collection serves as a handy reference for practical analysis and troubleshooting.
+
+These tools and command-line utilities are part of my day-to-day workflow in a Security Operations Center (SOC) environment. I rely on them for comprehensive analysis across multiple threat vectors, including phishing emails, malware-infected documents, suspicious PDFs, and abnormal network activity. They assist in extracting and decoding malicious attachments, inspecting embedded macros or scripts, parsing email headers, and validating IOCs from both host and network sources. I also use them to correlate data from logs, PCAPs, and endpoint artifacts to detect and confirm malicious behavior. This curated toolkit allows for quick triage, in-depth investigation, and manual verification, making it an essential reference for efficient incident response, threat hunting, and malware analysis.
 
 
 
