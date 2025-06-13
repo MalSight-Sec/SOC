@@ -126,6 +126,7 @@ $ tcpdump -tt -r file.pcap -n tcp
 
 ## 🎯 Find Most Active IPs (Talkers)
 ----------------------------------
+
 ➤ Extract source IPs:
 
 $ tcpdump -tt -r file.pcap -n tcp | cut -d " " -f 3 | cut -d "." -f 1-4 | sort | uniq -c | sort -nr
@@ -137,57 +138,74 @@ $tcpdump -tt -r file.pcap -n tcp | cut -d " " -f 5 | cut -d "." -f 1-4 | sort | 
 
 ## 🔁 Analyze Communication Between Two IPs
 -----------------------------------------
+
 ➤ Count packets between suspected source and destination:
+
 $ tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 --count
 
 
 ## 🔎 Identify Common Ports Used
 ------------------------------
 ➤ From 10.4.18.169 to 85.239.53.219:
-tcpdump -r file.pcap -n tcp and src host 10.4.18.169 and dst host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+
+$ tcpdump -r file.pcap -n tcp and src host 10.4.18.169 and dst host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
 
 ➤ Reverse (from 85.239.53.219 to 10.4.18.169):
-tcpdump -r file.pcap -n tcp and dst host 10.4.18.169 and src host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+
+$tcpdump -r file.pcap -n tcp and dst host 10.4.18.169 and src host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
 
 
 ## 🌐 Detect HTTP Requests (if unencrypted)
 -----------------------------------------
+
 ➤ Look for GET or POST requests:
-tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 -A | grep -E "GET|POST"
+
+$ tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 -A | grep -E "GET|POST"
 
 
 ## 🔤 Read Payloads in ASCII
 --------------------------
+
 $ tcpdump -r file.pcap host 10.4.18.169 and host 85.239.53.219 -A
 
 
 ## 🔐 Search for Sensitive Data (e.g., credentials)
 ------------------------------------------------
+
 ➤ Basic credential search:
-tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login"
+
+$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login"
 
 ➤ Exclude common headers (like User-Agent):
-tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login" | grep -v "User-Agent"
+
+$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login" | grep -v "User-Agent"
 
 
 ## 📁 Search for File Transfers or Names
+
 --------------------------------------
-tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "filename"
+
+$ tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "filename"
 
 
 ## 🌍 Find Domains (via DNS Queries)
 ----------------------------------
+
 ➤ Look for suspicious domains (e.g., t.me):
-tcpdump -r file.pcap | grep "t.me"
+
+$ tcpdump -r file.pcap | grep "t.me"
 
 ➤ Resolve domains to IPs:
-tcpdump -r file.pcap host t.me -n
+
+$ tcpdump -r file.pcap host t.me -n
 
 
 ## 🧩 Detect Suspicious File Types (DLLs, EXEs)
 --------------------------------------------
-tcpdump -r file.pcap | grep dll
+
+$ tcpdump -r file.pcap | grep dll
 
 ➤ Read content near DLL references:
-tcpdump -r file.pcap -A | grep dll -A 50 | less
+
+$ tcpdump -r file.pcap -A | grep dll -A 50 | less
 
