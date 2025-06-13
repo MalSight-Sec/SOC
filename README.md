@@ -11,11 +11,11 @@ These tools and command-line utilities are part of my day-to-day workflow in a S
 ## Phishing Analysis Tools:
 
 ### 1.)EIOC
-
+---------------------------------
  $ python3 eioc.py sample.eml 
 
 ### 2.)EMLDUMP
-
+---------------------------------
 $ python3 emldump.py   sample.eml 
 
 #### Dump and extract embedded files or attachments from an email file
@@ -24,12 +24,12 @@ $ python3 emldump.py  sample.eml  -s [index number of  flie place ex:5]  -d > sa
 
 
 ### 3.)HASH EXTRACTOR
-
+---------------------------------
 $ python3 hash.py  sample.txt 
 
 
 ### 4.)OLEID
-
+---------------------------------
 #### The troubleshooting case follows the commands below
 
 $ python3 -m venv myenv
@@ -43,6 +43,7 @@ $ python3 oleid.py sample.docm
 
 
 ### 5.)OLEDUMP
+---------------------------------
 
 #### oledump.py is a tool used to analyze OLE files, which are mostly older Microsoft Office documents. It works with file types like .doc, .xls, .ppt, .docm, .xlsm, and .msg. These files often contain embedded macros or objects, which can be used in phishing or malware attacks. oledump.py helps extract and view these hidden or suspicious components for further analysis.
 
@@ -56,6 +57,7 @@ $ python3  oledump.py  sample.docm -s A3 -v
 
 
 ### 6.)PDFID
+---------------------------------
 
 ✅ **Main Indicators of Malicious Activity in the PDF**
 
@@ -70,6 +72,7 @@ $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf
 
 
 ### 7.)PDF_PARSER
+---------------------------------
 
 #### Basic Command ###
 
@@ -78,3 +81,113 @@ $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf
 #### Dump and extract embedded files from a PDF file ###
 
  python3  pdf-parser.py  sample-vba-eicar-dropper.pdf  --object 8 --filter --raw  --dump  test.doc 
+
+
+
+# PCAP Analysis Methods with tcpdump tool
+
+
+
+## 📦 Method 1: Real PCAP Analysis (HTTP Focus)
+----------------------------------------------------
+
+
+##### Note: Avoid using "-n" when analyzing HTTP traffic, so domain names are visible.
+
+##### → Count HTTP packets (no output, just number):
+
+$ tcpdump -r 2024-04-18.pcap -tt port 80 --count
+
+##### → Extract HTTP GET/POST traffic to/from host 10.0.0.168:
+
+$ tcpdump -r 2021-09-14.pcap -tt port http and host 10.0.0.168 | grep -E "GET|POST"
+
+##### → Search for specific file names in raw payloads:
+
+$ tcpdump -r 2021-09-14.pcap -tt | grep "audiodg.exe"
+
+##### → Display file-related data in ASCII (500 lines after match):
+
+$ tcpdump -r 2021-09-14.pcap -tt -A | grep "audiodg.exe" -A 500 | less
+
+
+## 📊 Method 2: Advanced PCAP Analysis (All Protocols)
+-----------------------------------------------------------
+
+
+→ Basic packet count:
+
+$ tcpdump -r file.pcap --count
+
+→ List all TCP packets with timestamps:
+
+$ tcpdump -tt -r file.pcap -n tcp
+
+
+## 🎯 Find Most Active IPs (Talkers)
+----------------------------------
+➤ Extract source IPs:
+
+$ tcpdump -tt -r file.pcap -n tcp | cut -d " " -f 3 | cut -d "." -f 1-4 | sort | uniq -c | sort -nr
+
+➤ Extract destination IPs:
+
+$tcpdump -tt -r file.pcap -n tcp | cut -d " " -f 5 | cut -d "." -f 1-4 | sort | uniq -c | sort -nr
+
+
+## 🔁 Analyze Communication Between Two IPs
+-----------------------------------------
+➤ Count packets between suspected source and destination:
+$ tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 --count
+
+
+## 🔎 Identify Common Ports Used
+------------------------------
+➤ From 10.4.18.169 to 85.239.53.219:
+tcpdump -r file.pcap -n tcp and src host 10.4.18.169 and dst host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+
+➤ Reverse (from 85.239.53.219 to 10.4.18.169):
+tcpdump -r file.pcap -n tcp and dst host 10.4.18.169 and src host 85.239.53.219 | cut -d " " -f 3 | cut -d "." -f 5 | sort | uniq -c | sort -nr
+
+
+## 🌐 Detect HTTP Requests (if unencrypted)
+-----------------------------------------
+➤ Look for GET or POST requests:
+tcpdump -r file.pcap src host 10.4.18.169 and dst host 85.239.53.219 -A | grep -E "GET|POST"
+
+
+## 🔤 Read Payloads in ASCII
+--------------------------
+$ tcpdump -r file.pcap host 10.4.18.169 and host 85.239.53.219 -A
+
+
+## 🔐 Search for Sensitive Data (e.g., credentials)
+------------------------------------------------
+➤ Basic credential search:
+tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login"
+
+➤ Exclude common headers (like User-Agent):
+tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "pass\|user\|login" | grep -v "User-Agent"
+
+
+## 📁 Search for File Transfers or Names
+--------------------------------------
+tcpdump -r file.pcap host 85.239.53.219 -A | grep -i "filename"
+
+
+## 🌍 Find Domains (via DNS Queries)
+----------------------------------
+➤ Look for suspicious domains (e.g., t.me):
+tcpdump -r file.pcap | grep "t.me"
+
+➤ Resolve domains to IPs:
+tcpdump -r file.pcap host t.me -n
+
+
+## 🧩 Detect Suspicious File Types (DLLs, EXEs)
+--------------------------------------------
+tcpdump -r file.pcap | grep dll
+
+➤ Read content near DLL references:
+tcpdump -r file.pcap -A | grep dll -A 50 | less
+
