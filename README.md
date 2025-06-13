@@ -80,7 +80,7 @@ $ python3  pdfid.py  pdf-doc-vba-eicar-dropper.pdf
 
 #### Dump and extract embedded files from a PDF file ###
 
- python3  pdf-parser.py  sample-vba-eicar-dropper.pdf  --object 8 --filter --raw  --dump  test.doc 
+ $ python3  pdf-parser.py  sample-vba-eicar-dropper.pdf  --object 8 --filter --raw  --dump  test.doc 
 
 
 
@@ -175,6 +175,10 @@ $ tcpdump -r file.pcap host 10.xx.xx.xx and host 85.xx.xx.xx -A
 ➤ Basic credential search:
 
 $ tcpdump -r file.pcap host 85.xx.xx.xx -A | grep -i "pass\|user\|login"
+
+or
+
+$ tcpdump -r tcpdump_challenge.pcap -A port 80 | grep -iE "pass|password|user|login"
 
 ➤ Exclude common headers (like User-Agent):
 
