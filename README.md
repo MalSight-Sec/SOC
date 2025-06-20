@@ -218,8 +218,9 @@ $ tcpdump -r file.pcap -A | grep dll -A 50 | less
 
 Snort basic commands:
 
+
 | Command                 | Description                                    |
-| ---                     | ------------ ------ ------ ------ -----                                  |
+| ---                     | -----           |
 | `snort -i enp0s3`       | Basic sniffing on interface `enp0s3`           |
 | `snort -i enp0s3 -e`    | Shows Ethernet headers                         |
 | `snort -i enp0s3 -d`    | Shows application layer data (payload)         |
