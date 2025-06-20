@@ -1,0 +1,91 @@
+✅ tcpdump_challenge.pcap Questions
+
+1.) How many total packets are in the tcpdump_challenge.pcap packet capture?
+
+2.) How many ICMP packets are in the challenge.pcap packet capture?
+
+3.) What is the ASN of the destination IP address that the endpoint was pinging?
+
+4.) How many HTTP POST requests were made in the packet capture?
+
+5.) Look for any credentials within the payloads of any HTTP packets, what is the password you uncover?
+
+6.) Aside from HTTP on port 80, what is the other most frequent well-known destination port number?
+
+7.) What set of valid credentials did the endpoint use to access the file sharing server? (Format username:password)
+
+8.) What is the name of the file that was retrieved from the file sharing server?
+
+9.) Based on the unique User-Agent string found within the HTTP requests, what is the name of the related malware the endpoint might be infected with?
+
+10.) In defanged format, what was the full URL that the endpoint tried to connect to using the user agent identified above?
+
+11.) [Bonus] - What is the full title of the YouTube video that the user requested?
+
+
+
+
+
+
+### **Indicators of Compromise (IOCs) - SOC Analysis Notes**
+
+1. **User-Agent Anomalies**
+    
+    → Look for unusual `User-Agent` strings (e.g., `TeslaBrowser/5.5`).
+    
+    → Check online (Google, VirusTotal) if this user agent is linked to malware.
+    
+2. **ICMP Ping Usage**
+    
+    → Malware often uses `ping` to check if the C2 (Command and Control) server is alive.
+    
+    → ICMP traffic from hosts should be monitored for abnormal destinations.
+    
+3. **Ping Destination IP**
+    
+    → Analyze the IP being pinged using tools like DNS lookup.
+    
+    → Determine if it belongs to a legitimate service or a known C2 infrastructure (e.g., cloud abuse).
+    
+4. **Top Talkers (Local → External)**
+    
+    → Identify which local IP communicates most with external IPs.
+    
+    → Even if external IPs are legitimate, analyze behavior for anomalies.
+    
+5. **Frequent Ports Used**
+    
+    → Find which destination ports are used most often.
+    
+    → If it's a known port like 80, 443, etc., track patterns over time.
+    
+6. **Unusual Port Analysis**
+    
+    → If you find traffic on unexpected ports (e.g., 21, 22, 1337), investigate further.
+    
+    → If unsure, use AI-based threat intelligence or port reputation services.
+    
+7. **GET/POST Request Detection**
+    
+    → Use commands like `grep -E "GET|POST"` to detect HTTP methods.
+    
+    → Helps in identifying data exfiltration or suspicious interactions.
+    
+8. **Credentials Exposure**
+    
+    → Search for keywords: `user`, `username`, `pass`, `password`, `login`, etc.
+    
+    → Look inside HTTP payloads for potential plaintext credentials.
+    
+9. **Check for Legitimate Domains Used by Malware**
+    
+    → Malware may use legitimate services for dropped malware (e.g., Telegram `t.me`, Google Drive) to blend in.
+    
+    → Don't trust domains blindly—monitor their usage context.
+    
+10. **Suspicious URLs & File Analysis**
+    
+    → Scan suspicious domains and files via VirusTotal or other sandbox tools.
+    
+    → Note: If not flagged as malicious, it doesn’t always mean it’s safe—many threats go unreported or undetected.
+
