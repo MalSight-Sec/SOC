@@ -203,6 +203,9 @@ $ tcpdump -r file.pcap | grep "t.me"
 
 $ tcpdump -r file.pcap host t.me -n
 
+➤ Resolve domains
+
+$ tcpdump -r file.pcap port 53 -nn
 
 ## 🧩 Detect Suspicious File Types (DLLs, EXEs)
 --------------------------------------------
