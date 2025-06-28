@@ -10,9 +10,12 @@ These tools and command-line utilities are part of my day-to-day workflow in a S
 
 ## Phishing Analysis Tools:
 
-### 1.)EIOC
+### 1.)EIOC  
 ---------------------------------
- $ python3 eioc.py sample.eml 
+
+###### => This tools automatically extract IOC headers, data, time, subject, attachment files, etc, and attachment file hash 
+
+ $ python3 eioc.py sample.eml  
 
 ### 2.)EMLDUMP
 ---------------------------------
@@ -266,3 +269,171 @@ $  sudo snort -q -A console --daq afpacket -i enp0s3:enp0s8 -c /etc/snort/snort.
 Snort reads the file to detect and prevent commands:
 
 $  sudo snort -q -A console -c /etc/snort/snort.conf  -r snort.pcap
+
+
+# Endpoint analysis Important commands:
+
+## Tools:
+
+Autoruns
+
+Process Explorer
+
+Resitry panel
+
+services Pnael
+
+Task Manager panel
+
+TCP View
+
+Task scheduler panel
+
+Autorun PowerShell module 
+
+Commandline and PowerShell Commands
+
+### Basic Blue team cmds
+
+$ net view
+$ net share
+$ net session
+$ net use
+
+### 1.) Network analysis:
+
+$netstat -anob 
+
+### 2.) Process analysis
+
+$ tasklist /FI "PID eq 3624"
+$ tasklist /FI "PID eq 3624" /M ⇒ dll find
+$ tasklist /FI “IMAGENAME eq notmalware.exe”
+
+
+### 3.) Registry analysis
+
+#### Command Line:
+
+⇒ Main paths ( HKCU , HKLM )
+
+HKCU:
+$ reg query “HKCU\Software\Microsoft\Windows\CurrentVersion\Run”
+$ reg query “HKCU\Software\Microsoft\Windows\CurrentVersion\Runonce”
+
+
+HKLM:
+$ reg query “HKLM\Software\Microsoft\Windows\CurrentVersion\Run”
+$reg query “HKLM\Software\Microsoft\Windows\CurrentVersion\Runonce”
+
+#### Powershell:
+$ Get-ItemProperty -Path "Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Run”
+
+### 4.) Services analysis:
+
+#### Commandline:
+1.) $ net start ⇒ ( show all services )
+2.) $sc query ⇒ ( show all services extend )
+
+3.) $sc query state=all ( this only show running services )
+4.) $sc query “BackupService” ⇒ ( specific service show )
+5.) sc qc BackupService ⇒ (specific service execution binary and path show )
+
+
+
+#### Powershell:
+
+1.) $ Get-service ⇒ ( show all services )
+
+2.) $ Get-Service | Where-Object { $_.status -eq "Running" } ⇒ ( Only running services )
+
+3.) $Get-Service -Name "BackupService” ⇒ specific service show )
+
+4.) $ Get-Service -Name "B*” ⇒  ( Only extract “B” letter service )
+
+5.) $ Get-Service -Name “BackupService” | Select-Object “ ⇒ ( Only extend version ) 
+
+6.) $ Get-WmiObject -Class Win32_Service -Filter "Name = 'BackupService'" | Select-Object * ⇒ ( wmi Advanced Command and this wmi but a new version of PowerShell supports andan  old version supports)
+
+7.) $ Get-CimInstance -Class Win32_Service -Filter "Name = 'BackupService'" | Select-Object * ⇒ ( same but this ciminstance new version PowerShell support not old version support )
+
+###  5.) Task analysis:
+
+#### ⇒ Command Line:
+
+CMD.exe Run as admin
+
+1.) $ schtasks /query /fo LIST ⇒ ( List all services )
+
+2.) $ schtasks /query /tn “SystemCleanup” ⇒ ( show specific services details)
+
+3.) $ schtasks /query /tn “SystemCleanup” /v ⇒ ( more details get )
+
+4.) $ schtasks /query /tn “SystemCleanup” /v /fo LIST ⇒ ( much better output )
+
+# General methodology: look for any scheduled tasks
+
+1 admin
+
+2 privileged users
+
+3 system users account
+
+4 No user's name set
+
+5 Task runs suspicious location
+
+6 anything outside of the typical system folders
+
+7 task abnormal execution frequencies ( if tasks are running every minute or every 30 seconds)
+
+### 4.) Autoruns PowerShell for all analysis like Registry, Services, Task
+
+#### Let Practical:
+
+⇒ Shortly, this process explains create two Snapchats one create without malware
+execute, and another one is created after the malware executes
+
+⇒ If the changes case shows that is process runs ok, let's see 
+
+#### Install the autoruns module in PowerShell
+
+$  Set-ExecutionPolicy  Unrestricted
+
+$ Import-Module  .\AutoRuns.psm1
+
+$ Get-Module => ( Check autoruns available or not available )
+
+
+
+#### Process  to run the autoruns  baseline module in PowerShell
+
+
+
+1.) Create directory ( mkdir baseline )
+
+
+2.) Create Snapchat without malware execution 
+
+New-AutoRunsBaseLine - Baseline:
+
+Get-PSAutorun -VerifyDigitalSignature |
+
+Where { -not($_.isOSbinary)} |
+
+New-AutoRunsBaseLine -Verbose -FilePath .\Baseline.ps1
+
+3.)Create another Snapchat  after malware execution 
+
+New-AutoRunsBaseLine - CurrentState:
+
+Get-PSAutorun -VerifyDigitalSignature |
+
+Where { -not($_.isOSbinary)} |
+
+New-AutoRunsBaseLine -Verbose -FilePath .\CurrentState.ps1
+
+4.) Finally, compare the two results:
+
+$ Compare-AutoRunsBaseLine -ReferenceBaseLineFile .\Baseline.ps1 DifferenceBaseLineFile .\CurrentState.ps1 -Verbose
+
