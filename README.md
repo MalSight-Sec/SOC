@@ -458,6 +458,8 @@ $ powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Secur
 
 #####  Security Logs output file analysis cmd via cmd.exe:
 
+#####  Security logs Event Cmd.exe
+
 
 $  powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List *"
 
