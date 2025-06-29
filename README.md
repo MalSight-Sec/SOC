@@ -441,3 +441,75 @@ New-AutoRunsBaseLine -Verbose -FilePath .\CurrentState.ps1
 
 $ Compare-AutoRunsBaseLine -ReferenceBaseLineFile .\Baseline.ps1 DifferenceBaseLineFile .\CurrentState.ps1 -Verbose
 
+
+# Events Logs Tools:
+
+## Important Cmds:
+
+### CMD.exe
+
+#### Live Security Event analysis cmd  via cmd.exe:
+
+#####  Security Event Cmd.exe
+
+$  powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4720,4722,4723,4724,4738,4725,4726,4732,4688,1102} | Format-List *"
+
+$ powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4720,4722,4723,4724,4738,4725,4726,4732,4688,1102} | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\SecurityEvents.txt'"
+
+#####  Security Logs output file analysis cmd via cmd.exe:
+
+$  powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List *"
+
+$ powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\FilteredEvents.txt'"
+
+### Live system event analysis cmd  via cmd.exe :
+
+###### System Event  Cmd.exe
+
+$  powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Security'; ID= 7045,7030,7035,7036 } | Format-List *"
+
+$ powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Security'; ID=7045,7030,7035,7036} | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\SecurityEvents.txt'"
+
+### Systems Log output file analysis cmd via cmd.exe:
+
+$  powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in  7045,7030,7035,7036  } | Format-List *"
+
+$ powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in  7045,7030,7035,7036 } | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\FilteredEvents.txt'"
+
+## Powershell.exe
+
+### Live security event analysis cmd via PowerShell:
+
+#####  security event PowerShell
+
+$  Get-WinEvent -FilterHashtable @{LogName="Security"; ID=4720,4722,4723,4724,4738,4725,4726,4732,4688,1102} | Format-List  *
+
+$ Get-WinEvent -FilterHashtable @{LogName="Security"; ID=4720,4722,4723,4724,4738,4725,4726,4732,4688,1102} | Format-List  * | Out-File -Encoding utf8 "C:\Users\soc\Desktop\SecurityEvents.txt"   ⇒ ( Use real analysis case )
+
+###  Security Log output file analysis command via PowerShell:
+
+#####   System event PowerShell
+
+$ Get-WinEvent -FilterHashtable @{LogName="System"; ID=7045,7030,7035,7036} | Format-List *
+
+$ Get-WinEvent -FilterHashtable @{LogName="System"; ID=7045,7030,7035,7036} | Format-List * | Out-File -Encoding utf8 "C:\Users\soc\Desktop\SecurityEvents.txt"
+
+### Live system event analysis cmd via PowerShell:
+
+#####  Security   event PowerShell
+
+$Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List * 
+
+$ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List * | Out-File "C:\Users\soc\Desktop\FilteredEvents.txt" -Encoding utf8
+
+### System  Log output file analysis command via PowerShell:
+
+#####  System  event PowerShell
+
+$ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 7045,7030,7035,7036 } | Format-List *
+
+$ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 7045,7030,7035,7036 } | Format-List * | Out-File "C:\Users\soc\Desktop\FilteredEvents.txt" -Encoding utf8
+
+
+
+
