@@ -442,7 +442,7 @@ New-AutoRunsBaseLine -Verbose -FilePath .\CurrentState.ps1
 $ Compare-AutoRunsBaseLine -ReferenceBaseLineFile .\Baseline.ps1 DifferenceBaseLineFile .\CurrentState.ps1 -Verbose
 
 
-# Events Logs Tools:
+# Events Logs Analyisi Commands:
 
 ## Important Cmds:
 
