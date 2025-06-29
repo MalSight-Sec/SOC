@@ -458,11 +458,12 @@ $ powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Secur
 
 #####  Security Logs output file analysis cmd via cmd.exe:
 
+
 $  powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List *"
 
 $ powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\FilteredEvents.txt'"
 
-### Live system event analysis cmd  via cmd.exe :
+###  Live system event analysis cmd  via cmd.exe :
 
 ###### System Event  Cmd.exe
 
@@ -470,7 +471,7 @@ $  powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Secu
 
 $ powershell -NoProfile -Command "Get-WinEvent -FilterHashtable @{LogName='Security'; ID=7045,7030,7035,7036} | Format-List * | Out-File -Encoding utf8 'C:\\Users\\soc\\Desktop\\SecurityEvents.txt'"
 
-### Systems Log output file analysis cmd via cmd.exe:
+###  Systems Log output file analysis cmd via cmd.exe:
 
 $  powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\03_Endpoint_Security\\Windows\\Challenges\\challenge.evtx' | Where-Object { $_.Id -in  7045,7030,7035,7036  } | Format-List *"
 
@@ -478,7 +479,7 @@ $ powershell -NoProfile -Command "Get-WinEvent -Path 'C:\\Users\\soc\\Desktop\\0
 
 ## Powershell.exe
 
-### Live security event analysis cmd via PowerShell:
+### Live security event analysis cmd via powershell:
 
 #####  security event PowerShell
 
@@ -486,7 +487,7 @@ $  Get-WinEvent -FilterHashtable @{LogName="Security"; ID=4720,4722,4723,4724,47
 
 $ Get-WinEvent -FilterHashtable @{LogName="Security"; ID=4720,4722,4723,4724,4738,4725,4726,4732,4688,1102} | Format-List  * | Out-File -Encoding utf8 "C:\Users\soc\Desktop\SecurityEvents.txt"   ⇒ ( Use real analysis case )
 
-###  Security Log output file analysis command via PowerShell:
+###  Live system event analysis cmd via powershell:
 
 #####   System event PowerShell
 
@@ -494,7 +495,7 @@ $ Get-WinEvent -FilterHashtable @{LogName="System"; ID=7045,7030,7035,7036} | Fo
 
 $ Get-WinEvent -FilterHashtable @{LogName="System"; ID=7045,7030,7035,7036} | Format-List * | Out-File -Encoding utf8 "C:\Users\soc\Desktop\SecurityEvents.txt"
 
-### Live system event analysis cmd via PowerShell:
+###  Security event Log output file analysis cmd via powershell:
 
 #####  Security   event PowerShell
 
@@ -502,7 +503,7 @@ $Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenge
 
 $ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 4720,4722,4723,4724,4738,4725,4726,4732,4688,1102 } | Format-List * | Out-File "C:\Users\soc\Desktop\FilteredEvents.txt" -Encoding utf8
 
-### System  Log output file analysis command via PowerShell:
+###  System  Log output file analysis command via PowerShell:
 
 #####  System  event PowerShell
 
