@@ -419,9 +419,9 @@ $ Get-Module => ( Check autoruns available or not available )
 
 2.) Create Snapchat without malware execution 
 
-New-AutoRunsBaseLine - Baseline:
+##### New-AutoRunsBaseLine - Baseline:
 
-Get-PSAutorun -VerifyDigitalSignature |
+$ Get-PSAutorun -VerifyDigitalSignature |
 
 Where { -not($_.isOSbinary)} |
 
@@ -429,9 +429,9 @@ New-AutoRunsBaseLine -Verbose -FilePath .\Baseline.ps1
 
 3.)Create another Snapchat  after malware execution 
 
-New-AutoRunsBaseLine - CurrentState:
+##### New-AutoRunsBaseLine - CurrentState:
 
-Get-PSAutorun -VerifyDigitalSignature |
+$ Get-PSAutorun -VerifyDigitalSignature |
 
 Where { -not($_.isOSbinary)} |
 
