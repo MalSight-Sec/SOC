@@ -315,7 +315,7 @@ $ tasklist /FI “IMAGENAME eq notmalware.exe”
 
 #### Command Line:
 
-⇒ Main paths ( HKCU , HKLM )
+⇒ Main paths ( HKCU, HKLM )
 
 HKCU:
 $ reg query “HKCU\Software\Microsoft\Windows\CurrentVersion\Run”
@@ -332,11 +332,15 @@ $ Get-ItemProperty -Path "Registry::HKLM\Software\Microsoft\Windows\CurrentVersi
 ### 4.) Services analysis:
 
 #### Commandline:
+
 1.) $ net start ⇒ ( show all services )
+
 2.) $sc query ⇒ ( show all services extend )
 
-3.) $sc query state=all ( this only show running services )
+3.) $sc query state=all ( this only shows running services )
+
 4.) $sc query “BackupService” ⇒ ( specific service show )
+
 5.) sc qc BackupService ⇒ (specific service execution binary and path show )
 
 
@@ -347,13 +351,13 @@ $ Get-ItemProperty -Path "Registry::HKLM\Software\Microsoft\Windows\CurrentVersi
 
 2.) $ Get-Service | Where-Object { $_.status -eq "Running" } ⇒ ( Only running services )
 
-3.) $Get-Service -Name "BackupService” ⇒ specific service show )
+3.) $Get-Service -Name "BackupService” ⇒  ( specific service show )
 
 4.) $ Get-Service -Name "B*” ⇒  ( Only extract “B” letter service )
 
 5.) $ Get-Service -Name “BackupService” | Select-Object “ ⇒ ( Only extend version ) 
 
-6.) $ Get-WmiObject -Class Win32_Service -Filter "Name = 'BackupService'" | Select-Object * ⇒ ( wmi Advanced Command and this wmi but a new version of PowerShell supports andan  old version supports)
+6.) $ Get-WmiObject -Class Win32_Service -Filter "Name = 'BackupService'" | Select-Object * ⇒ ( wmi Advanced Command and this wmi but a new version of PowerShell supports and an  old version supports)
 
 7.) $ Get-CimInstance -Class Win32_Service -Filter "Name = 'BackupService'" | Select-Object * ⇒ ( same but this ciminstance new version PowerShell support not old version support )
 
