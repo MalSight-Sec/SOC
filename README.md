@@ -39,6 +39,16 @@ $ python3 -m venv myenv
 
 $source myenv/bin/activate
 
+Change the virtual ( myenv )  directory to the bin directory
+
+$ (myenv) ms@SOC:~$ which floss
+/home/ms17/myenv/bin/floss
+
+File change  directory cmd
+
+$ sudo cp -rf  /home/ms17/myenv/bin/filename /usr/bin/ 
+
+
 #### Then try the below command:
 
 $ python3 oleid.py sample.docm   
