@@ -39,7 +39,7 @@ $ python3 -m venv myenv
 
 $source myenv/bin/activate
 
-Change the virtual ( myenv )  directory to the bin directory
+#### Change the virtual ( myenv )  directory to the bin directory AND  this way to access any place that tools or file
 
 $ (myenv) ms@SOC:~$ which floss
 /home/ms17/myenv/bin/floss
