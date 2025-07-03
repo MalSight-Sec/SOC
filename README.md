@@ -659,7 +659,7 @@ I you check go proc directory and see that still available
 
 ## Crontab analysis:
 
-$ cat /etc/crontab => we can malicious cmds or files
+$ cat /etc/crontab => we can see malicious cmds or files
 
 $ $ ls -al /var/spool/cron/crontabs/  => which users use crontab
 
