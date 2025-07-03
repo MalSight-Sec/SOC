@@ -31,6 +31,21 @@ $ python3 emldump.py  sample.eml  -s [index number of  flie place ex:5]  -d > sa
 $ python3 hash.py  sample.txt 
 
 
+
+### Windows Hash EXTRACT
+
+---------------------------------
+
+$ get-filehash .\test.iso
+
+$ get-filehash  .\test.iso  -algorithm md5
+
+$ get-filehash  .\test.iso  -algorithm sha1
+
+$ get-filehash .\test.iso; get-filehash  .\test.iso  -algorithm md5; get-filehash  .\test.iso  -algorithm sha1
+
+
+
 ### 4.)OLEID
 ---------------------------------
 #### The troubleshooting case follows the commands below
