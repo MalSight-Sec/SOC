@@ -301,6 +301,8 @@ Task scheduler panel
 
 Autorun PowerShell module 
 
+Sysmon
+
 Commandline and PowerShell Commands
 
 ### Basic Blue team cmds
@@ -405,7 +407,7 @@ CMD.exe Run as admin
 
 #### Let Practical:
 
-⇒ Shortly, this process explains create two Snapchats one create without malware
+⇒ Shortly, this process explains create two Snapchats, one created without malware
 execute, and another one is created after the malware executes
 
 ⇒ If the changes case shows that is process runs ok, let's see 
@@ -427,7 +429,7 @@ $ Get-Module => ( Check autoruns available or not available )
 1.) Create directory ( mkdir baseline )
 
 
-2.) Create Snapchat without malware execution 
+2.) Create Snapchat without malware execution, that means fresh
 
 ##### New-AutoRunsBaseLine - Baseline:
 
@@ -522,6 +524,215 @@ $ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challeng
 $ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 7045,7030,7035,7036 } | Format-List *
 
 $ Get-WinEvent -Path "C:\Users\soc\Desktop\03_Endpoint_Security\Windows\Challenges\challenge.evtx" | Where-Object { $_.Id -in 7045,7030,7035,7036 } | Format-List * | Out-File "C:\Users\soc\Desktop\FilteredEvents.txt" -Encoding utf8
+
+
+## Sysmon XML query via Event Viewer:
+
+### Event Viewer: Process ID XML Query
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<QueryList>
+<Query Id="0" Path="Microsoft-Windows-Sysmon/Operational">
+<Select Path="Microsoft-Windows-Sysmon/Operational"> *[System[Provider[@Name='Microsoft-Windows-Sysmon']]] and *[EventData[Data[@Name='ProcessId'] and (Data='<ENTER YOUR PID HERE>')]] </Select>
+</Query>
+</QueryList>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Event Viewer: Process ID XML Query - Process Creation Events
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+<QueryList>
+<Query Id="0" Path="Microsoft-Windows-Sysmon/Operational">
+<Select Path="Microsoft-Windows-Sysmon/Operational">
+*[System[Provider[@Name='Microsoft-Windows-Sysmon'] and (EventID=1)]]
+and
+*[EventData[Data[@Name='ProcessId'] and (Data='<ENTER YOUR PID HERE>')]]
+</Select>
+</Query>
+</QueryList>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## Sysmon via powershell:
+
+
+$ Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational"
+
+$ Get-WinEvent -FilterHashtable @{logname="Microsoft-Windows-Sysmon/Operational"; id=1}
+
+$ Get-WinEvent -FilterHashtable @{logname="Microsoft-Windows-Sysmon/Operational"; id=3} -MaxEvents 1 | Format-List *
+
+$ Get-WinEvent -LogName 'Microsoft-Windows-Sysmon/Operational' -FilterXPath "*[System/EventID=3 and EventData[Data[@Name='DestinationPort']='4444']]" | Format-List *
+
+$ Get-WinEvent -LogName 'Microsoft-Windows-Sysmon/Operational' -FilterXPath "*[System/EventID=1]"
+
+$ Get-WinEvent -LogName 'Microsoft-Windows-Sysmon/Operational' -FilterXPath "*[System/EventID=1 and EventData[Data[@Name='ProcessId']='<ENTER YOUR PID HERE>']]" | Format-List *
+
+
+# Important Commands for Linux Endpoint Analysis:
+
+## Network analysis:
+
+$  sudo netstat -tnp  ( or )  netstat -atnp 
+
+$  sudo netstat -tulnp
+
+$ sudo ss  -tnp
+
+$ sudo lsof -i -P
+
+$ sudo lsof -p
+
+## Process analysis:
+
+#### What process runs the system?:
+
+$ sudo ps
+
+$ sudo ps -u <username>
+
+$ sudo ps -AFH | less
+
+$ sudo ps -p < parent or child process_id > -F
+
+$ sudo ps --ppid <parent id 3764 >  -F
+
+#### Find the parent-child process using pstree:
+
+$pstree => show hierarchical view
+
+$pstree -p -s <process_id> => more suitable specific process
+
+
+#### The dynamic update running process uses top:
+
+$sudo top => show all processes and dynamically update all new processes
+
+$sudo top -u  ms17 => extract specific uses
+
+$sudo top -u  ms17 -c => show command of execute
+
+$sudo top -u ms17 -c -o -TIME+ => Capture recently process
+
+
+
+## proc directory find all processes:
+
+$cd /proc/3894  =>  show all processes and dynamically update all new processes
+
+##### some import file to proc reverse shell directory:
+
+$cmd => cmd execute file name
+
+$cwd => malware execution location
+
+$cat environ  | tr '\0' '\n'  =>  It contains the environment variables of the running process (in string format).
+
+Example: PATH, USER, HOME, LANG, SHELL, SECRET_KEY, etc.
+
+but our case important  username=tcm , and  home=/home/tcm
+
+$exe => ls -al exe  ( show what file and malware execute location )
+
+##  Delete the file but run background  in proc dir analysis:
+
+#### Note that even malware delete case process runs background because that runs a virtual file ( proc directory), which means it runs in memory.
+
+$ps -AHF | gerp "notmalware"
+
+⇒ Create a backup malware file
+
+⇒  and DELETE the malware file
+
+$ps -AHF | gerp "notmalware" | grep -v grep
+
+$ lsof -p <malware process id>  = (in that case, malware runs background, even malware file is deleted)
+
+$ lsof +L1 => This command views all deleted files, even those running in the  background
+
+I you check go proc directory and see that still available
+
+## Crontab analysis:
+
+$ cat /etc/crontab => we can malicious cmds or files
+
+$ $ ls -al /var/spool/cron/crontabs/  => which users use crontab
+
+$ sudo  cat   /var/spool/cron/crontabs/tcm => Read user file
+
+##### Instead, another analysis  cmds:
+
+$  sudo crontab -u tcm -l
+
+### Analysis crontab main directory
+
+$ ls -al /etc | grep cron
+
+### ⇒ Check all directories like
+
+cron.d
+
+cron.daily
+
+cron.hourly
+
+cron.yearly
+
+cron.weakly
+
+cron.monthly
+
+## Log analysis:
+
+#### Manual  Logs analysis:
+
+#### Key Linux Log Files to Analyze (Security-Relevant)
+
+
+| 📁 Log File                                         | 🔎 Purpose |
+| ---                                                 | --- |
+| `/var/log/auth.log` (Debian)                        | Authentication events (login, sudo, SSH, failures, etc.) |
+| `/var/log/secure` (RHEL/CentOS)                     | Same as `auth.log` (for RedHat-based systems) |
+| `/var/log/syslog`                                   | System-wide logs, including services |
+| `/var/log/messages`                                 | Kernel + system logs (RHEL-based) |
+| `/var/log/cron`                                     | Cron job execution logs |
+| `/var/log/wtmp`                                     | Binary log of user logins/logouts – use `last` |
+| `/var/log/btmp`                                     | Failed login attempts – use `lastb` |
+| `/var/log/dmesg`                                    | Kernel ring buffer (boot, hardware, drivers) |
+| `/var/log/bash_history`                             | Shell command history (if not cleared by attacker) |
+| `/var/log/audit/audit.log                         ` | SELinux/auditd logs (if auditd is enabled) |
+| `/var/log/httpd/access_log`                         | Web server logs (Apache/Nginx) – good for web attack tracing |
+
+
+### 🛠️ Manual Log Analysis Techniques:
+
+###### View SSH login attempts
+$ grep 'sshd' /var/log/auth.log
+
+###### View failed login attempts
+$ grep 'Failed password' /var/log/auth.log
+
+###### View successful logins
+$ grep 'Accepted password' /var/log/auth.log
+
+###### Check for new user creation
+$ grep 'useradd' /var/log/auth.log
+
+###### Review Command Execution (if bash history available)
+
+$ cat ~/.bash_history
+
+
+## Auto Logs analysis:
+
+$ sudo logwatch --detail High --service All --range today --format text
+
+$ sudo logwatch --detail High --range today > /tmp/log_report.txt
 
 
 
