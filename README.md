@@ -347,15 +347,20 @@ $ tasklist /FI “IMAGENAME eq notmalware.exe”
 ⇒ Main paths ( HKCU, HKLM )
 
 HKCU:
+
 $ reg query “HKCU\Software\Microsoft\Windows\CurrentVersion\Run”
+
 $ reg query “HKCU\Software\Microsoft\Windows\CurrentVersion\Runonce”
 
 
 HKLM:
+
 $ reg query “HKLM\Software\Microsoft\Windows\CurrentVersion\Run”
+
 $reg query “HKLM\Software\Microsoft\Windows\CurrentVersion\Runonce”
 
 #### Powershell:
+
 $ Get-ItemProperty -Path "Registry::HKLM\Software\Microsoft\Windows\CurrentVersion\Run”
 
 ### 4.) Services analysis:
