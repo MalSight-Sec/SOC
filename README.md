@@ -325,8 +325,11 @@ Commandline and PowerShell Commands
 ### Basic Blue team cmds
 
 $ net view
+
 $ net share
+
 $ net session
+
 $ net use
 
 ### 1.) Network analysis:
@@ -336,7 +339,9 @@ $netstat -anob
 ### 2.) Process analysis
 
 $ tasklist /FI "PID eq 3624"
+
 $ tasklist /FI "PID eq 3624" /M ⇒ dll find
+
 $ tasklist /FI “IMAGENAME eq notmalware.exe”
 
 
@@ -432,7 +437,7 @@ CMD.exe Run as admin
 ⇒ Shortly, this process explains create two Snapchats, one created without malware
 execute, and another one is created after the malware executes
 
-⇒ If the changes case shows that is process runs ok, let's see 
+⇒ If the changes case shows that the process runs ok, let's see 
 
 #### Install the autoruns module in PowerShell
 
