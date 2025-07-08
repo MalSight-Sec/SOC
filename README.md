@@ -345,6 +345,15 @@ $ tasklist /FI "PID eq 3624" /M ⇒ dll find
 $ tasklist /FI “IMAGENAME eq notmalware.exe”
 
 
+$ wmic  process where processid=6036 get name, parentprocessid , processid  ⇒ 📌  Get process name, PID, and its parent PID.
+
+$ wmic  process  get name, parentprocessid , processid  | find “192”  ⇒  📌  Find all processes with “192” in output (e.g., PIDs, names).
+
+$ wmic process where processid=2832 get commandline ⇒   📌 Get the command line that started the process.
+
+##### Note ⇒  📌 Normally, you run notmalware.exe  execute  case, use    cmd.exe,   so the  first  parent process is cmd.exe and the child process is notmalware.exe
+
+
 ### 3.) Registry analysis
 
 #### Command Line:
