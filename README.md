@@ -344,6 +344,7 @@ $ tasklist /FI "PID eq 3624" /M ⇒ dll find
 
 $ tasklist /FI “IMAGENAME eq notmalware.exe”
 
+### WMIC
 
 $ wmic  process where processid=6036 get name, parentprocessid , processid  ⇒ 📌  Get process name, PID, and its parent PID.
 
