@@ -660,7 +660,7 @@ $sudo top -u ms17 -c -o -TIME+ => Capture recently process
 
 ## proc directory find all processes:
 
-$cd /proc/3894  =>  show all processes and dynamically update all new processes
+$cd /proc/3894  =>  show all processes and dynamically update all new processes ( this is very important because even delete a file during running, it runs background that proc directory)  
 
 ##### some import file to proc reverse shell directory:
 
@@ -696,7 +696,7 @@ I you check go proc directory and see that still available
 
 ## Crontab analysis:
 
-$ cat /etc/crontab => we can see malicious cmds or files
+$ cat /etc/crontab => we can see malicious commands or files
 
 $ $ ls -al /var/spool/cron/crontabs/  => which users use crontab
 
@@ -724,7 +724,7 @@ cron.weakly
 
 cron.monthly
 
-## Log analysis:
+# Log analysis:
 
 #### Manual  Logs analysis:
 
@@ -772,5 +772,155 @@ $ sudo logwatch --detail High --service All --range today --format text
 $ sudo logwatch --detail High --range today > /tmp/log_report.txt
 
 
+# Logs analysis: Important methodology 
 
+### Important Commands:
+
+$ file test.log
+
+$ head -n 1 test.log
+
+### Most IP talks:
+
+$ cut test.log -d “ “ -f 1  |  sort |  uniq -c  | grep -v “ 1 “ | sort -nr 
+
+### Found suspicious User agent:
+
+$ cut challenge.log  -d "\""  -f 6  |  sort |  uniq -c
+
+### Find the extract value:
+
+$ grep "Nmap Scripting Engine" access.log
+
+$ grep "Nmap Scripting Engine" access.log   | awk '{print $1}' | sort  | uniq -c
+
+### Brute force trace:
+
+=> site redirect 302 301 and most modern web 200 use
+
+$ grep "Mozilla/5.0 (Hydra)"  access.log  | awk  '{print $9}'
+
+$ grep "Mozilla/5.0 (Hydra)"  access.log  | awk  '$9 > 200'
+
+$ grep "Mozilla/5.0 (Hydra)"  access.log  | grep  -v "/login.php"
+
+## Grep:
+
+grep -c "404" access.log
+
+grep -n "404" access.log
+
+grep -E '%3C|%3E|<|>' access.log
+
+grep -E '\.\./|%2E%2E%2F|%2E%2E%2E%2E%2F%2F' access.log
+
+
+## 🔍 Use `grep` Patterns for Web Attack Detection:
+
+### 1. SQL Injection (SQLi)
+
+
+
+
+$ grep -Ei "(\%27)|(\')|(\-\-)|(\%23)|(#)|(\bUNION\b)|(\bSELECT\b)|(\bINSERT\b)|(\bUPDATE\b)|(\bDELETE\b)" access.log
+
+
+
+### 2. Cross-Site Scripting (XSS)
+
+
+
+$ grep -Ei "(\<script\>)|(%3Cscript%3E)|(\bon\w+=)|(\balert\b)|(\bconfirm\b)|(\bdocument\.cookie\b)" access.log
+
+
+### 3. Command Injection
+
+
+
+$ grep -Ei "(;|\&\&|\|\||\`|\$\(.*\)|\bcat\b|\bwget\b|\bcurl\b|\bnc\b|\bping\b|\bpython\b|\bbash\b)" access.log
+
+
+
+### 4. Local File Inclusion (LFI)
+
+
+
+$ grep -Ei "(\.\./)|(%2e%2e%2f)|(/etc/passwd)|(/proc/self/environ)" access.log
+
+
+
+### 5. Remote File Inclusion (RFI)
+
+
+
+$ grep -Ei "(http[s]?:\/\/.*\.(php|txt|jpg|gif|png))" access.log
+
+
+
+### 6. Path Traversal
+
+
+
+$ grep -Ei "(\.\./|\.\.\\)" access.log
+
+
+
+### 7. PHP Injection or Execution
+
+
+
+$ grep -Ei "(\bphpinfo\b)|(\beval\b)|(\bsystem\b)|(\bexec\b)|(\bpopen\b)|(\bpassthru\b)" access.log
+
+
+
+### 8. User-Agent Based Attacks (like scanners or bots)
+
+
+
+$ grep -Ei "(nikto|acunetix|sqlmap|nessus|nmap|curl|wget)" access.log
+
+
+
+### 🔁 Combine With Other Filters
+
+#### To find only  suspicious GET requests:
+
+
+
+$ grep -Ei "GET .*((\.\./)|(\<script\>)|(\bUNION\b))" access.log
+
+
+
+#### To find requests by a specific IP:
+
+
+
+$ grep "192.168.1.10" access.log | grep -Ei "(select|union|<script>)"
+
+
+
+
+## Jq uses:
+
+$ jq . access.log
+
+$ jq 'length' events.json
+
+$ jq 'map(.event)' event.json
+
+#### child:
+
+$ jq '.[] | select(.event.PROCESS_ID == 3532)' event.json
+
+$ jq '.[] | select(.event.PROCESS_ID == 3532) | .event.HASH' event.json
+
+#### Parent:
+
+$ jq '.[] | select(.event.PROCESS_ID == 3532) | .event.PARENT' event.json
+
+$ jq '.[] | select(.event.PROCESS_ID == 3532) | .event.PARENT.PROCESS_ID' event.json
+
+### Automation Code:
+
+json_alert.sh ⇒ Use this script for automation
 
