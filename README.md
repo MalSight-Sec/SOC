@@ -806,13 +806,13 @@ $ grep "Mozilla/5.0 (Hydra)"  access.log  | grep  -v "/login.php"
 
 ## Grep:
 
-grep -c "404" access.log
+$ grep -c "404" access.log
 
-grep -n "404" access.log
+$ grep -n "404" access.log
 
-grep -E '%3C|%3E|<|>' access.log
+$ grep -E '%3C|%3E|<|>' access.log
 
-grep -E '\.\./|%2E%2E%2F|%2E%2E%2E%2E%2F%2F' access.log
+$ grep -E '\.\./|%2E%2E%2F|%2E%2E%2E%2E%2F%2F' access.log
 
 
 ## 🔍 Use `grep` Patterns for Web Attack Detection:
