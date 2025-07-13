@@ -920,6 +920,28 @@ $ jq '.[] | select(.event.PROCESS_ID == 3532) | .event.PARENT' event.json
 
 $ jq '.[] | select(.event.PROCESS_ID == 3532) | .event.PARENT.PROCESS_ID' event.json
 
+#### 🔐 SOC-Worthy Fields to Hunt Malware in JSON Logs
+
+|     No. |  Field Name          |
+| ------: | --------------------- |
+|       1 | `PROCESS_ID`          |
+|       2 | `PARENT_PROCESS_ID`   |
+|       3 | `FILE_PATH`           |
+|       4 | `FILE_IS_SIGNED`      |
+|       5 | `SIGNER_NAME`         |
+|       6 | `COMMAND_LINE`        |
+|       7 | `USER_NAME`           |
+|       8 | `THREADS`             |
+|       9 | `MEMORY_USAGE`        |
+|      10 | `BASE_ADDRESS`        |
+|      11 | `CHILD_PROCESSES`     |
+|      12 | `NETWORK_CONNECTIONS` |
+|      13 | `HASH`                |
+|      14 | `INJECTED_INTO`       |
+|      15 | `CREATION_TIME`       |
+|      16 | `WORKING_DIRECTORY`   |
+
+
 ### Automation Code:
 
 json_alert.sh ⇒ Use this script for automation
