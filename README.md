@@ -246,6 +246,33 @@ $ tcpdump -r file.pcap | grep dll
 
 $ tcpdump -r file.pcap -A | grep dll -A 50 | less
 
+
+## Wireshark
+
+##### 📘 Wireshark Display Filter – Important Rules
+
+| 📌 Purpose                                 | 🧪 Display Filter                                 |
+|-------------------------------------------|--------------------------------------------------|
+| All HTTP requests                          | `http.request`                                   |
+| Only POST requests                         | `http.request.method == "POST"`                  |
+| Only GET requests                          | `http.request.method == "GET"`                   |
+| URI contains suspicious file (e.g. .exe)   | `http.request.uri contains "audiodg.exe"`        |
+| DNS query to specific domain               | `dns.qry.name == "example.com"`                  |
+| HTTP traffic on port 80                    | `tcp.port == 80`                                 |
+| Match specific IP address (src or dst)     | `ip.addr == 192.168.0.1`                         |
+| HTTP payload contains "login" keyword      | `http contains "login"`                          |
+| HTTP payload contains "audiodg.exe"        | `http contains "audiodg.exe"`                    |
+| User-Agent contains "sqlmap"               | `http.user_agent contains "sqlmap"`              |
+| User-Agent contains "Mozilla"             | `http.user_agent contains "Mozilla"`             |
+| User-Agent contains "python-requests"      | `http.user_agent contains "python-requests"`     |
+| Referrer contains "example.com"            | `http.referer contains "example.com"`            |
+| HTTP requests from specific source IP      | `ip.src == 10.0.0.5 and http.request`            |
+| Filter by TCP stream number                | `tcp.stream eq 3`                                |
+| Detect executable download attempt         | `http.request.uri contains ".exe"`               |
+
+
+
+
 ## Snort Important commands
 --------------------------------------------
 
