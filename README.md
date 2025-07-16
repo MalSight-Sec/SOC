@@ -813,7 +813,7 @@ $ cut test.log -d “ “ -f 1  |  sort |  uniq -c  | grep -v “ 1 “ | sort -
 
 ### Found suspicious User agent:
 
-$ cut challenge.log  -d "\""  -f 6  |  sort |  uniq -c
+$ cut challenge.log  -d " \ ""  -f 6  |  sort |  uniq -c
 
 ### Find the extract value:
 
