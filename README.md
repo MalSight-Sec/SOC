@@ -725,7 +725,7 @@ I you check go proc directory and see that still available
 
 $ cat /etc/crontab => we can see malicious commands or files
 
-$ $ ls -al /var/spool/cron/crontabs/  => which users use crontab
+$  ls -al /var/spool/cron/crontabs/  => which users use crontab
 
 $ sudo  cat   /var/spool/cron/crontabs/tcm => Read user file
 
