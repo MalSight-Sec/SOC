@@ -44,7 +44,7 @@ $ get-filehash  .\test.iso  -algorithm sha1
 
  #### Compain commands for hash extraction
 
-$ get-filehash .\test.iso; get-filehash  .\test.iso  -algorithm md5; get-filehash  .\test.iso  -algorithm sha1
+$ get-filehash .\test.iso get-filehash  .\test.iso  -algorithm md5; get-filehash  .\test.iso  -algorithm sha1
 
 
 
