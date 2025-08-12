@@ -737,7 +737,7 @@ $  sudo crontab -u tcm -l
 
 $ ls -al /etc | grep cron
 
-### ⇒ Check all directories like
+### ⇒ Check all the directories, like copy hash  and  paste virustotal
 
 cron.d
 
