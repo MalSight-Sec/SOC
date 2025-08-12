@@ -687,11 +687,11 @@ $sudo top -u ms17 -c -o -TIME+ => Capture recently process
 
 ## proc directory find all processes:
 
-$cd /proc/3894  =>  show all processes and dynamically update all new processes ( this is very important because even delete a file during running, it runs background that proc directory)  
+$cd /proc/3894  =>  show all processes and dynamically update all new processes ( this is very important because even delete a file during running, it runs background the proc directory)  
 
 ##### some import file to proc reverse shell directory:
 
-$cmd => cmd execute file name
+$ cat cmdline => cmd execute file name
 
 $cwd => malware execution location
 
