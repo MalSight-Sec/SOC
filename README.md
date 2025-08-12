@@ -727,7 +727,7 @@ $ cat /etc/crontab => we can see malicious commands or files
 
 $  ls -al /var/spool/cron/crontabs/  => which users use crontab
 
-$ sudo  cat   /var/spool/cron/crontabs/tcm => Read user file
+$ sudo  cat   /var/spool/cron/crontabs/<user_name> => Read user file
 
 ##### Instead, another analysis  cmds:
 
