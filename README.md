@@ -269,7 +269,8 @@ $ tcpdump -r file.pcap -A | grep dll -A 50 | less
 | HTTP requests from specific source IP      | `ip.src == 10.0.0.5 and http.request`            |
 | Filter by TCP stream number                | `tcp.stream eq 3`                                |
 | Detect executable download attempt         | `http.request.uri contains ".exe"`               |
-| Filter for Specific Status Codes       | `http.response.code == 200 or http.response.code >= 400`               |
+| Filter for Specific Status Codes           | `http.response.code == 200 or http.response.code >= 400`               |
+| Filter for Full http request               | `http.request.full_uri `               |
 
 
 
