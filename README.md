@@ -725,7 +725,7 @@ $cd /proc/3894  =>  show all processes and dynamically update all new processes 
 
 $ cat cmdline => cmd execute file name
 
-$cwd => malware execution location
+$ cwd => malware execution location or malware name  
 
 $cat environ  | tr '\0' '\n'  =>  It contains the environment variables of the running process (in string format).
 
