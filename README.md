@@ -493,10 +493,10 @@ $ Get-Module => ( Check autoruns available or not available )
 
 
 
-1.) Create directory ( mkdir baseline )
+1.) Create a directory ( mkdir baseline )
 
 
-2.) Create Snapchat without malware execution, that means fresh
+2.) Create Snapchat without malware execution, which means fresh
 
 ##### New-AutoRunsBaseLine - Baseline:
 
@@ -520,8 +520,43 @@ New-AutoRunsBaseLine -Verbose -FilePath .\CurrentState.ps1
 
 $ Compare-AutoRunsBaseLine -ReferenceBaseLineFile .\Baseline.ps1 DifferenceBaseLineFile .\CurrentState.ps1 -Verbose
 
+# Important logs:
+
+### Security Logs
+
++-------+-----------------------------------------------------------+
+|  ID   | Event Description                                         |
++-------+-----------------------------------------------------------+
+| 4624  | An account was successfully logged on                     |
+| 4720  | A user account was created                                |
+| 4722  | A user account was enabled                                |
+| 4723  | An attempt was made to change an account's password       |
+| 4724  | An attempt was made to reset an account's password        |
+| 4738  | A user account was changed                                |
+| 4725  | A user account was disabled                               |
+| 4726  | A user account was deleted                                |
+| 4732  | A member was added to a security-enabled local group      |
+| 4688  | A new process has been created                            |
+| 1102  | The audit log was cleared                                 |
++-------+-----------------------------------------------------------+
+
+### System Logs
+
++-------+-----------------------------------------------------------+
+|  ID   | Event Description                                         |
++-------+-----------------------------------------------------------+
+| 7045  | A service was installed in the system                     |
+| 7030  | The Service Control Manager tried to take a corrective    |
+|       | action (Restart the service)                              |
+| 7035  | The Service Control Manager is transitioning services     |
+|       | to a running state                                        |
+| 7036  | The Service Control Manager has reported that a service   |
+|       | has entered the running state                             |
++-------+-----------------------------------------------------------+
+
 
 # Events Logs Analysis Commands:
+
 
 ## Important Cmds:
 
