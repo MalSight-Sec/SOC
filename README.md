@@ -330,6 +330,8 @@ $  sudo snort -q -A console -c /etc/snort/snort.conf  -r snort.pcap
 
 # Endpoint analysis Important commands:
 
+## Windows Endpoint analysis commands:
+
 ## Tools:
 
 Autoruns
