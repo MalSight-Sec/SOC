@@ -682,7 +682,7 @@ $ sudo ss  -tnp
 
 $ sudo lsof -i -P
 
-$ sudo lsof -p
+$ sudo lsof -p <PID>
 
 ## Process analysis:
 
