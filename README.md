@@ -745,7 +745,7 @@ $ps -AHF | gerp "notmalware"
 
 ⇒  and DELETE the malware file
 
-$ps -AHF | gerp "notmalware" | grep -v grep
+$ps -AHF | grep "notmalware" | grep -v grep
 
 $ lsof -p <malware process id>  = (in that case, malware runs background, even malware file is deleted)
 
